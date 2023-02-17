@@ -2,11 +2,15 @@ package com.example.minutemarker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+
+import java.util.HashSet;
 
 public class EditNoteActivity extends AppCompatActivity {
 
@@ -41,6 +45,12 @@ public class EditNoteActivity extends AppCompatActivity {
 
                 MainActivity.notes.set(noteId, String.valueOf(charSequence));
                 MainActivity.arrayAdapter.notifyDataSetChanged();
+
+                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.minutemarker;", Context.MODE_PRIVATE);
+
+                HashSet<String> set = new HashSet(MainActivity.notes);
+
+                sharedPreferences.edit().putStringSet("notes", set).apply();
 
             }
 

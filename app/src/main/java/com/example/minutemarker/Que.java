@@ -1,6 +1,6 @@
 package com.example.minutemarker;
 /*
-Last Modified Matthew McNatt: 2/17
+Last Modified Matthew McNatt: 2/27
 */
 
 import java.util.ArrayList;
@@ -17,6 +17,12 @@ public class Que {
     private ArrayList<String> _triggers;
 
     //getters & setters
+
+
+    public ArrayList<String> getTriggers() {
+        return _triggers;
+    }
+
     public String getTitle() {
         return _title;
     }

@@ -12,8 +12,21 @@ import static org.junit.Assert.*;
  */
 public class QueCheckTest {
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
-        System.out.println("test!!!!!");
+    public void QueDetectorDetects() {
+        QueDetectorInitializer init = new QueDetectorInitializer();
+        QueDetector q = init.loadImplementationQues();
+
+        //should be null
+        Que try1 = q.CheckForTriggers("try1");
+        assert(try1 == null);
+
+        Que try2 = q.CheckForTriggers("alarm");
+        assert(try2.getTitle().equals("alarm"));
+        System.out.println( try2.getTitle()+ " detected");
+
+        Que try3 = q.CheckForTriggers("for");
+        assert(try3.getTitle().equals("stopwatch"));
+        System.out.println( try3.getTitle()+ " detected");
+
     }
 }

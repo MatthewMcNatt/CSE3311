@@ -17,16 +17,42 @@ public class QueCheckTest {
         QueDetector q = init.loadImplementationQues();
 
         //should be null
-        Que try1 = q.CheckForTriggers("try1");
-        assert(try1 == null);
+        Que test = q.CheckForTriggers("try1");
+        assert(test == null);
 
-        Que try2 = q.CheckForTriggers("alarm");
-        assert(try2.getTitle().equals("alarm"));
-        System.out.println( try2.getTitle()+ " detected");
+        test = q.CheckForTriggers("alarm ");
+        assert(test.getTitle().equals("alarm"));
+        System.out.println( test.getTitle()+ " detected");
 
-        Que try3 = q.CheckForTriggers("for");
-        assert(try3.getTitle().equals("stopwatch"));
-        System.out.println( try3.getTitle()+ " detected");
+        test = q.CheckForTriggers(" for ");
+        assert(test.getTitle().equals("stopwatch"));
+        System.out.println( test.getTitle()+ " detected");
 
+        test = q.CheckForTriggers(" FOR ");
+        assert(test.getTitle().equals("stopwatch"));
+        System.out.println( test.getTitle()+ " detected");
+
+        test = q.CheckForTriggers("");
+        assert(test==null);
+
+        test = q.CheckForTriggers("a ");
+        assert(test==null);
+
+        test = q.CheckForTriggers("I will not fire ");
+        assert(test==null);
+
+        test = q.CheckForTriggers("The game is on");
+        assert(test==null);
+
+        test = q.CheckForTriggers("The game is oN ");
+        assert(test.getTitle().equals("alarm"));
+        System.out.println( test.getTitle()+ " detected");
+
+        test = q.CheckForTriggers("The game is oN....");
+        assert(test==null);
+
+        test = q.CheckForTriggers("The game is!oN?");
+        assert(test.getTitle().equals("alarm"));
+        System.out.println( test.getTitle()+ " detected");
     }
 }

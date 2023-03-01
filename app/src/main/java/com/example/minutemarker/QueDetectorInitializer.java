@@ -6,6 +6,7 @@ Last Modified Matthew McNatt: 2/27
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /*
@@ -21,7 +22,7 @@ public class QueDetectorInitializer {
     }
 
     public QueDetector loadImplementationQues(){
-        ArrayList<String> d = new ArrayList<String>();
+        HashSet<String> d = new HashSet<String>();
         {
             d.add(" ");
             d.add(".");
@@ -30,21 +31,22 @@ public class QueDetectorInitializer {
             d.add("?");
             d.add("/");
         }
-        QueDetector q = new QueDetector();
-        {
-            q.AddQue(new Que("alarm", new ArrayList<String>(
-                    Arrays.asList(
-                            "set", "at", "on", "alarm"
-                    )
-            )));
-            q.AddQue(new Que("stopwatch", new ArrayList<String>(
-                    Arrays.asList(
-                            "for", "hour", "minute", "stopwatch"
-                    )
-            )));
-        }
 
-        return q;
+        ArrayList<Que> q = new ArrayList<Que>();
+        q.add(new Que("alarm", new ArrayList<String>(
+                Arrays.asList(
+                        "set", "at", "on", "alarm"
+                )
+        )));
+        q.add(new Que("stopwatch", new ArrayList<String>(
+                Arrays.asList(
+                        "for", "hour", "minute", "stopwatch"
+                )
+        )));
+
+        return new QueDetector(q, d);
+
+
     }
 
     public QueDetector testImplementationQues(){

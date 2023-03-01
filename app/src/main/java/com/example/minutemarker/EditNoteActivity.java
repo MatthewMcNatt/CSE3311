@@ -2,7 +2,9 @@ package com.example.minutemarker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,6 +29,10 @@ public class EditNoteActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        //INITIALIZE DETECTOR
+        QueDetectorInitializer init = new QueDetectorInitializer();
+        QueDetector que_detector = init.loadImplementationQues();
+
         //this attempts to pull the note selected into the screen context.
         //The minus one is default value, in other words, if there is
         //no not associated with the id, the use case is creating a new note
@@ -50,6 +56,8 @@ public class EditNoteActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //declare a holder que object
+                Que que = null;
 
                 //IMPORTANT: this is the heart of the note permanence PER APPLICATION INSTANCE.
                 //Every time text changes, the notes in main activity is updated
@@ -64,6 +72,18 @@ public class EditNoteActivity extends AppCompatActivity {
                 HashSet<String> set = new HashSet(MainActivity.notes);
                 //This is what writes to the file
                 sharedPreferences.edit().putStringSet("notes", set).apply();
+
+                //run detection algorithm
+                que = que_detector.CheckForTriggers(String.valueOf(charSequence));
+                if(que!=null){
+                    new AlertDialog.Builder(EditNoteActivity.this)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setTitle("QUE DETECTED")
+                            .setMessage("The detected que was: "+que.getTitle())
+                            .setPositiveButton("Ok cool!", null)
+                            .show();
+                }
+
 
             }
 

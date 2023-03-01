@@ -75,6 +75,7 @@ public class EditNoteActivity extends AppCompatActivity {
 
                 //run detection algorithm
                 que = que_detector.CheckForTriggers(String.valueOf(charSequence));
+                //if it returns something, flash dialog
                 if(que!=null){
                     new AlertDialog.Builder(EditNoteActivity.this)
                             .setIcon(android.R.drawable.ic_dialog_alert)

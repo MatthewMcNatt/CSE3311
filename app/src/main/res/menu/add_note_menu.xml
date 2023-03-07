@@ -2,4 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <!--add here for more menu options-->
     <item android:id= "@+id/add_note" android:title="Add Note"></item>
+    <item
+        android:id="@+id/settings"
+        android:title="Settings" />
 </menu>

@@ -50,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        if(item.getItemId()==R.id.settings){
+            Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+
+            startActivity(intent);
+            return true;
+        }
         return false;
     }
 

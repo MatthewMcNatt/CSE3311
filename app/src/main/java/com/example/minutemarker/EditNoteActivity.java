@@ -9,8 +9,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.HashSet;
 
@@ -68,7 +75,7 @@ public class EditNoteActivity extends AppCompatActivity {
                 //IMPORTANT: this is the heart of the note permanence ACROSS APPLICATION INSTANCE.
                 //this is basically a file link. This line opens connection
                 SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.minutemarker;", Context.MODE_PRIVATE);
-                //this line creates a hashset which shared preferneces is capable of storing
+                //this line creates a hashset which shared prefereneces is capable of storing
                 HashSet<String> set = new HashSet(MainActivity.notes);
                 //This is what writes to the file
                 sharedPreferences.edit().putStringSet("notes", set).apply();
@@ -76,6 +83,7 @@ public class EditNoteActivity extends AppCompatActivity {
                 //run detection algorithm
                 que = que_detector.CheckForTriggers(String.valueOf(charSequence));
                 //if it returns something, flash dialog
+                // I WANT TO DO MY IMPLEMENTATION HERE
                 if(que!=null){
                     new AlertDialog.Builder(EditNoteActivity.this)
                             .setIcon(android.R.drawable.ic_dialog_alert)
@@ -87,6 +95,8 @@ public class EditNoteActivity extends AppCompatActivity {
 
 
             }
+
+
 
             @Override
             public void afterTextChanged(Editable editable) {

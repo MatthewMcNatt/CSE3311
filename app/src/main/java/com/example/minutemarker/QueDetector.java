@@ -63,7 +63,7 @@ public class QueDetector {
         }
         _triggerSizeMax = max;
 
-        /* //uncomment to see what the data looks like under the hood
+        /*uncomment to see what the data looks like under the hood
         System.out.println("MAX Trigger is :"+_triggerSizeMax);
         System.out.println("THE LOADED QUE TRIGGERS ARE:");
         for (String i : _triggers.keySet()) {

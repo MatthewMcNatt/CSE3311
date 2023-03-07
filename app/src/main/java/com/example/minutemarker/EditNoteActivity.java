@@ -1,5 +1,6 @@
 package com.example.minutemarker;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -34,6 +36,7 @@ public class EditNoteActivity extends AppCompatActivity {
         //text editor UI binding(boilerPlate)
         EditText editText = (EditText) findViewById(R.id.editText);
 
+
         Intent intent = getIntent();
 
         //INITIALIZE DETECTOR
@@ -56,10 +59,10 @@ public class EditNoteActivity extends AppCompatActivity {
         //Event Listeners
         //Two are blank but left intentionally
         editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            //@Override
+            //public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //Maybe needed later?
-            }
+            //}
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -85,23 +88,37 @@ public class EditNoteActivity extends AppCompatActivity {
                 //if it returns something, flash dialog
                 // I WANT TO DO MY IMPLEMENTATION HERE
                 if(que!=null){
-                    new AlertDialog.Builder(EditNoteActivity.this)
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setTitle("QUE DETECTED")
-                            .setMessage("The detected que was: "+que.getTitle())
-                            .setPositiveButton("Ok cool!", null)
-                            .show();
+                    // getting the que word that has been detected to display
+                    String message = "que has been detected " + que.getTitle();
+                    // formatting certian part of string
+                    SpannableString spannableString = new SpannableString(message);
+                    // want the formatting to be applied only on que word
+                    // finding the indices where formatting shall start and end
+                    int startI = message.indexOf(que.getTitle());
+                    int endI = startI + que.getTitle().length();
+
+                    // run what happens when word clicked
+                    ClickableSpan clickableSpan = new ClickableSpan() {
+                        @Override
+                        public void onClick(@NonNull View view) {
+                            // handling click event
+                            Intent intent = new Intent(EditNoteActivity.this,QueActivity.class);
+                            startActivity(intent);
+                        }
+                        // underlining the que word
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                            ds.setUnderlineText(true);
+                        }
+                    };
+                    // making que string spannable
+                    spannableString.setSpan(clickableSpan, startI, endI, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
 
 
             }
 
-
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                //Maybe needed later?
-            }
         });
 
     }

@@ -59,10 +59,10 @@ public class EditNoteActivity extends AppCompatActivity {
         //Event Listeners
         //Two are blank but left intentionally
         editText.addTextChangedListener(new TextWatcher() {
-            //@Override
-            //public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //Maybe needed later?
-            //}
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -117,6 +117,11 @@ public class EditNoteActivity extends AppCompatActivity {
                 }
 
 
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // didn't use
             }
 
         });

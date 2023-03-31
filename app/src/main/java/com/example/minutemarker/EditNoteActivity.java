@@ -115,6 +115,7 @@ public class EditNoteActivity extends AppCompatActivity {
 
                                 Toast.makeText(EditNoteActivity.this, currentQue.getTitle(),
                                         Toast.LENGTH_LONG).show();
+                                //THIS IS HOW YOU LINK ACTIVITIES TO HYPERLINKS
                                 if(currentQue.getTitle().equalsIgnoreCase("alarm")){
                                     Intent intent = new Intent(getApplicationContext(), Alarm_Activity.class);
                                     startActivity(intent);

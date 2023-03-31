@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Spannable;
@@ -20,6 +21,7 @@ import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashSet;
 
@@ -48,9 +50,11 @@ public class EditNoteActivity extends AppCompatActivity {
         //no not associated with the id, the use case is creating a new note
         //and a new note is created.
         noteId = intent.getIntExtra("noteId", -1);
+
         if(noteId != -1 ){
             editText.setText(MainActivity.notes.get(noteId));
-        }else{
+        }
+        else{
             MainActivity.notes.add(" ");
             noteId = MainActivity.notes.size()-1;
             MainActivity.arrayAdapter.notifyDataSetChanged();
@@ -86,37 +90,37 @@ public class EditNoteActivity extends AppCompatActivity {
                 //run detection algorithm
                 que = que_detector.CheckForTriggers(String.valueOf(charSequence));
                 //if it returns something, flash dialog
-                // I WANT TO DO MY IMPLEMENTATION HERE
-                if(que!=null){
-                    // getting the que word that has been detected to display
-                    String message = "que has been detected " + que.getTitle();
-                    // formatting certian part of string
-                    SpannableString spannableString = new SpannableString(message);
-                    // want the formatting to be applied only on que word
-                    // finding the indices where formatting shall start and end
-                    int startI = message.indexOf(que.getTitle());
-                    int endI = startI + que.getTitle().length();
+                if(que != null){
+
+
+                    //String message = "que has been detected " + que.getTitle();
+
+                    int start = charSequence.toString().indexOf(que.getTitle());
+                    int end = start + que.getTitle().length();
+                    SpannableString ss = new SpannableString(charSequence);
 
                     // run what happens when word clicked
                     ClickableSpan clickableSpan = new ClickableSpan() {
                         @Override
-                        public void onClick(@NonNull View view) {
-                            // handling click event
-                            Intent intent = new Intent(EditNoteActivity.this,QueActivity.class);
+                        public void onClick(View view) {
+
+                            Uri uri = Uri.parse("https://www.google.com");
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                             startActivity(intent);
+
                         }
-                        // underlining the que word
                         @Override
                         public void updateDrawState(TextPaint ds) {
                             super.updateDrawState(ds);
                             ds.setUnderlineText(true);
                         }
                     };
-                    // making que string spannable
-                    spannableString.setSpan(clickableSpan, startI, endI, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    ss.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    editText.setText(ss);
+                    editText.setMovementMethod(LinkMovementMethod.getInstance());
+                    editText.setSelection(editText.getText().length());
                 }
-
-
             }
 
             @Override

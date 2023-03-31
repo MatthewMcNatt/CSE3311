@@ -72,8 +72,9 @@ public class MainActivity extends AppCompatActivity {
         //it fills set, and if set is not null, it adds a single example note.
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.minutemarker;", Context.MODE_PRIVATE);
         HashSet<String> set = (HashSet<String>) sharedPreferences.getStringSet("notes", null);
-        if(set == null){
-            notes.add("example note");
+        if(set == null || set.isEmpty()){
+            notes.add("DAY\n");
+            notes.add("MONTH\n");
         }else{
             notes= new ArrayList(set);
         }

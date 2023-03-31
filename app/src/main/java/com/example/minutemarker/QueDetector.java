@@ -132,6 +132,34 @@ public class QueDetector {
 
     }
 
+    public String getTriggerWord(String input){
+        //will only check on delimiter. Wont detect a trigger until
+        //user is finished typing word.
+        //empty string catch
+        if(input.length()<=1)
+            return null;
+        String lastChar = String.valueOf(input.charAt(input.length()-1));
+        if(!_delimeters.contains(lastChar)) {
+            return null;
+        }
+
+        //it was a delimiter so we grab the word
+        //first get the start index: loop backwards until delimiter
+        //start at second to last character
+        int start = -1;
+        for(int i = input.length()-2; i >= 0 && start == -1; i--){
+            if(_delimeters.contains(String.valueOf(input.charAt(i)))){
+                start = i+1;
+            }
+        }
+        //if start equals -1 then there was no delimiters found, start at 0
+        if(start == -1){
+            start = 0;
+        }
+
+        //here is the word to search for
+        return input.substring(start, input.length()-1);
+    }
     //DETECTOR METHOD
     /*FOR NOW THIS IS A HACK IMPLEMENTATION*/
     /*THIS WILL BE EXTREMELY EFFICIENT SOON*/

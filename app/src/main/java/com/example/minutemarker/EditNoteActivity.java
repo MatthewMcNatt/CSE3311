@@ -29,6 +29,8 @@ public class EditNoteActivity extends AppCompatActivity {
 
     //The note to work on
     int noteId;
+    Que currentQue = null;
+    String currentContext = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,55 +73,63 @@ public class EditNoteActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //declare a holder que object
-                Que que = null;
+                 if(!currentContext.equalsIgnoreCase(String.valueOf(charSequence))) {
+                    Que que = null;
 
-                //IMPORTANT: this is the heart of the note permanence PER APPLICATION INSTANCE.
-                //Every time text changes, the notes in main activity is updated
-                MainActivity.notes.set(noteId, String.valueOf(charSequence));
-                //this tells the link between UI displaying notes in MAIN MENU  that notes changed
-                MainActivity.arrayAdapter.notifyDataSetChanged();
+                    //IMPORTANT: this is the heart of the note permanence PER APPLICATION INSTANCE.
+                    //Every time text changes, the notes in main activity is updated
+                    MainActivity.notes.set(noteId, String.valueOf(charSequence));
+                    //this tells the link between UI displaying notes in MAIN MENU  that notes changed
+                    MainActivity.arrayAdapter.notifyDataSetChanged();
 
-                //IMPORTANT: this is the heart of the note permanence ACROSS APPLICATION INSTANCE.
-                //this is basically a file link. This line opens connection
-                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.minutemarker;", Context.MODE_PRIVATE);
-                //this line creates a hashset which shared prefereneces is capable of storing
-                HashSet<String> set = new HashSet(MainActivity.notes);
-                //This is what writes to the file
-                sharedPreferences.edit().putStringSet("notes", set).apply();
-
-                //run detection algorithm
-                que = que_detector.CheckForTriggers(String.valueOf(charSequence));
-                //if it returns something, flash dialog
-                if(que != null){
+                    //IMPORTANT: this is the heart of the note permanence ACROSS APPLICATION INSTANCE.
+                    //this is basically a file link. This line opens connection
+                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.minutemarker;", Context.MODE_PRIVATE);
+                    //this line creates a hashset which shared prefereneces is capable of storing
+                    HashSet<String> set = new HashSet(MainActivity.notes);
+                    //This is what writes to the file
+                    sharedPreferences.edit().putStringSet("notes", set).apply();
 
 
-                    //String message = "que has been detected " + que.getTitle();
+                    //run detection algorithm
+                    que = que_detector.CheckForTriggers(String.valueOf(charSequence));
+                    //if it returns something, flash dialog
+                    currentContext = String.valueOf(charSequence);
+                    if (que != null) {
+                        currentQue = que;
+                        que = null;
 
-                    int start = charSequence.toString().indexOf(que.getTitle());
-                    int end = start + que.getTitle().length();
-                    SpannableString ss = new SpannableString(charSequence);
 
-                    // run what happens when word clicked
-                    ClickableSpan clickableSpan = new ClickableSpan() {
-                        @Override
-                        public void onClick(View view) {
+                        //String message = "que has been detected " + que.getTitle();
+                        String trigger = que_detector.getTriggerWord(String.valueOf(charSequence));
+                        System.out.println(trigger);
 
-                            Uri uri = Uri.parse("https://www.google.com");
-                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                            startActivity(intent);
+                        int start = charSequence.toString().indexOf(trigger);
+                        int end = start + trigger.length();
+                        SpannableString ss = new SpannableString(charSequence);
 
-                        }
-                        @Override
-                        public void updateDrawState(TextPaint ds) {
-                            super.updateDrawState(ds);
-                            ds.setUnderlineText(true);
-                        }
-                    };
+                        // run what happens when word clicked
+                        ClickableSpan clickableSpan = new ClickableSpan() {
+                            @Override
+                            public void onClick(View view) {
 
-                    ss.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    editText.setText(ss);
-                    editText.setMovementMethod(LinkMovementMethod.getInstance());
-                    editText.setSelection(editText.getText().length());
+                                Toast.makeText(EditNoteActivity.this, currentQue.getTitle(),
+                                        Toast.LENGTH_LONG).show();
+
+                            }
+
+                            @Override
+                            public void updateDrawState(TextPaint ds) {
+                                super.updateDrawState(ds);
+                                ds.setUnderlineText(true);
+                            }
+                        };
+
+                        ss.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        editText.setText(ss);
+                        editText.setMovementMethod(LinkMovementMethod.getInstance());
+                        editText.setSelection(editText.getText().length());
+                    }
                 }
             }
 

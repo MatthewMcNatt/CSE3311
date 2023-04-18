@@ -3,6 +3,7 @@ package com.example.minutemarker;
 Last Modified Matthew McNatt: 2/27
 */
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /*
@@ -11,7 +12,9 @@ import java.util.ArrayList;
 * that would represent the action. The latter will depend
 * highly on implementation.
 */
-public class Que {
+public class Que implements Serializable{
+
+    private static final long serialVersionUID = 1;
     //used as identifier
     private String _title;
     private ArrayList<String> _triggers;

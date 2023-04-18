@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     //text array and the arraylist adapter
     //The adapter pipes the strings into the listview format
     static ArrayList<String> notes = new ArrayList<>();
+    QueDetectorInitializer init;
+    QueDetector que_detector;
     static ArrayAdapter arrayAdapter;
 
     @Override
@@ -46,13 +48,13 @@ public class MainActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
         if(item.getItemId()==R.id.add_note){
             Intent intent = new Intent(getApplicationContext(), EditNoteActivity.class);
-
+            intent.putExtra("que_detector", que_detector);
             startActivity(intent);
             return true;
         }
         if(item.getItemId()==R.id.settings){
             Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
-
+            intent.putExtra("que_detector", que_detector);
             startActivity(intent);
             return true;
         }
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init = new QueDetectorInitializer();
+        que_detector = init.loadImplementationQues();
 
         //The list of notes
         ListView listview = (ListView) findViewById(R.id.listView);
@@ -93,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //screen to go to
                 Intent intent = new Intent(getApplicationContext(), EditNoteActivity.class);
+                intent.putExtra("que_detector", que_detector);
                 //send noteId
                 intent.putExtra("noteId", i);
                 startActivity(intent);

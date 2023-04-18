@@ -4,6 +4,7 @@ package com.example.minutemarker;
 Last Modified Matthew McNatt: 2/27
 */
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,7 +18,9 @@ import java.util.Map;
 * It takes in strings, and returns Ques associated
 * with those string triggers. Otherwise it returns null
 * */
-public class QueDetector {
+public class QueDetector implements Serializable {
+    //serial
+    private static final long serialVersionUID = 1;
 
     //fields
     private ArrayList<Que> _ques;

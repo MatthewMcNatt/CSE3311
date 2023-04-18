@@ -44,8 +44,7 @@ public class EditNoteActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         //INITIALIZE DETECTOR
-        QueDetectorInitializer init = new QueDetectorInitializer();
-        QueDetector que_detector = init.loadImplementationQues();
+        QueDetector que_detector = (QueDetector) getIntent().getSerializableExtra("que_detector");
 
         //this attempts to pull the note selected into the screen context.
         //The minus one is default value, in other words, if there is

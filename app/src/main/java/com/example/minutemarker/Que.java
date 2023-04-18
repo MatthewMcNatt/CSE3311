@@ -47,6 +47,10 @@ public class Que {
         _title = title;
     }
 
+    public void setTriggers(ArrayList<String> t){
+        _triggers = t;
+    }
+
 
 
 

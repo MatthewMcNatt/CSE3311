@@ -88,6 +88,29 @@ public class QueDetector {
         return _ques.get(index);
     }
 
+    //get method that uses a string title
+    public Que GetQue(String title){
+        for(Que q : _ques) {
+            if (q.getTitle().equalsIgnoreCase(title))
+                return q;
+        }
+        return null;
+    }
+
+    //set triggers for a que.
+    public void setQueTriggers(String title, ArrayList<String> triggers){
+        Que que = this.GetQue(title);
+        for(Que q: _ques){
+           if(q != que){
+               for(String s1 : q.getTriggers())
+                   for(String s2 : triggers)
+                       if(s1.equalsIgnoreCase(s2))
+                           throw new IllegalArgumentException("QUES CANNOT HAVE MATCHING TRIGGERS");
+           }
+        }
+        que.setTriggers(triggers);
+    }
+
     //DETECTOR METHOD
     /*FOR NOW THIS IS A HACK IMPLEMENTATION*/
     /*THIS WILL BE EXTREMELY EFFICIENT SOON*/

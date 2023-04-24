@@ -119,6 +119,10 @@ public class EditNoteActivity extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(), Alarm_Activity.class);
                                     startActivity(intent);
                                 }
+                                if(currentQue.getTitle().equalsIgnoreCase("stopwatch")){
+                                    Intent intent = new Intent(getApplicationContext(), StopwatchActivity.class);
+                                    startActivity(intent);
+                                }
 
                             }
 

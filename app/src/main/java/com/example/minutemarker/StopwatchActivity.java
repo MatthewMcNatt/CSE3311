@@ -1,4 +1,5 @@
 package com.example.minutemarker;
+/*Code Adapted from: https://www.geeksforgeeks.org/how-to-create-a-stopwatch-app-using-android-studio*/
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,17 +12,8 @@ import java.util.Locale;
 
 public class StopwatchActivity extends AppCompatActivity {
 
-    // Use seconds, running and wasRunning respectively
-    // to record the number of seconds passed,
-    // whether the stopwatch is running and
-    // whether the stopwatch was running
-    // before the activity was paused.
-
-    // Number of seconds displayed
-    // on the stopwatch.
     private int seconds = 0;
 
-    // Is the stopwatch running?
     private boolean running;
 
     private boolean wasRunning;
@@ -86,27 +78,18 @@ public class StopwatchActivity extends AppCompatActivity {
     }
 
     // Start the stopwatch running
-    // when the Start button is clicked.
-    // Below method gets called
-    // when the Start button is clicked.
     public void onClickStart(View view)
     {
         running = true;
     }
 
     // Stop the stopwatch running
-    // when the Stop button is clicked.
-    // Below method gets called
-    // when the Stop button is clicked.
     public void onClickStop(View view)
     {
         running = false;
     }
 
     // Reset the stopwatch when
-    // the Reset button is clicked.
-    // Below method gets called
-    // when the Reset button is clicked.
     public void onClickReset(View view)
     {
         running = false;

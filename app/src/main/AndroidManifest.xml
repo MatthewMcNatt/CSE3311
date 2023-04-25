@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.minutemarker">
 
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MinuteMarker">
         <activity
+            android:name=".StopwatchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Alarm_Activity"
+            android:exported="false" />
+        <activity
             android:name=".EditNoteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
